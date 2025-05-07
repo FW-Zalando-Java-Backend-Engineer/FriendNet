@@ -58,12 +58,27 @@ public class FriendGraph {
         Queue<String> queue = new LinkedList<>(); // Initialize 'BFS' Search Queue
         queue.add(source); // Add the source user to start the search
 
+        // Process Until Queue is Empty
+        // Typical BFS loop — continue until all connected nodes are visited or target is found.
         while (!queue.isEmpty()){
+           // Step1: Dequeue and Check
+            String current = queue.poll();
+            if(current.equals(target)) return true; // If this is the target, we found a connection → return true.
+           // Mark as Visited: Avoid visiting this user again in future iterations.
+            visited.add(current);
+
+            // Explore Neighbors
+            for(String neighbor: getFriends(current)){
+                if(!visited.contains(neighbor)){
+                    queue.add(neighbor);
+                }
+            }
+
 
         }
 
 
-
+        // If We Exhaust All Options
         return false;
     }
 }
